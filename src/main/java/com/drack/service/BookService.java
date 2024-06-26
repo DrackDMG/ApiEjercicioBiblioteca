@@ -1,6 +1,5 @@
 package com.drack.service;
 
-import com.drack.persistence.entity.repository.BookRepository;
 import com.drack.persistence.entity.Book;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +9,7 @@ import java.util.Optional;
 @Service
 public interface BookService{
     List<Book> findAll();
-    Book findById(Long id);
+    Optional<Book> findById(Long id);
     Book save(Book book);
     void deleteById(Long id);
 }

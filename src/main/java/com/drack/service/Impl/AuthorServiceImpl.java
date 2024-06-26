@@ -21,7 +21,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Optional findById(Long id) {
+    public Optional<Author> findById(Long id) {
         return authorRepository.findById(id);
     }
 

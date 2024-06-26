@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/books")
@@ -20,12 +21,12 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> findById(@PathVariable Long id){
-        Book book = bookService.findById(id);
-        if(book == null){
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Optional<Book>> findById(@PathVariable Long id){
+        Optional<Book> book = bookService.findById(id);
+        if (book.isPresent()) {
+            return ResponseEntity.ok(book);
         }
-        return ResponseEntity.ok(book);
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping
@@ -35,15 +36,16 @@ public class BookController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Book> update(@PathVariable Long id, @RequestBody Book book){
-        Book bookToUpdate = bookService.findById(id);
-        if(bookToUpdate == null){
+        Optional<Book> bookToUpdate =  bookService.findById(id);
+        if (bookToUpdate.isPresent()) {
+            bookToUpdate.get().setTitle(book.getTitle());
+            bookToUpdate.get().setAuthorId(book.getAuthorId());
+            bookToUpdate.get().setPublishedDate(book.getPublishedDate());
+            bookToUpdate.get().setCode(book.getCode());
+            return ResponseEntity.ok(bookService.save(bookToUpdate.orElse(null)));
+        } else {
             return ResponseEntity.notFound().build();
         }
-        bookToUpdate.setTitle(book.getTitle());
-        bookToUpdate.setAuthorId(book.getAuthorId());
-        bookToUpdate.setPublishedDate(book.getPublishedDate());
-        bookToUpdate.setCode(book.getCode());
-        return ResponseEntity.ok(bookService.save(bookToUpdate));
     }
 
     @DeleteMapping("/{id}")
