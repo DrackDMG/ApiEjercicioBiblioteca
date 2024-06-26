@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public interface BookService{
     List<Book> findAll();
-    Optional findById(Long id);
+    Book findById(Long id);
     Book save(Book book);
     void deleteById(Long id);
 }

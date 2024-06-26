@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface AuthorService{
 
     List<Author> findAll();
-    Optional findById(Long id);
+    Author findById(Long id);
     Author save(Author author);
     void deleteById(Long id);
 
