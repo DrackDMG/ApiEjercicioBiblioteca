@@ -6,7 +6,7 @@ import com.drack.persistence.entity.repository.AuthorRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface AuthorService extends AuthorRepository {
+public interface AuthorService{
 
     List<Author> findAll();
     Optional findById(Long id);
